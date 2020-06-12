@@ -4,6 +4,12 @@ import (
 	"github.com/zmb3/spotify"
 )
 
+var (
+	State        = "vivek_spotify"
+	ClientId     string
+	ClientSecret string
+)
+
 type SpotifyToken struct {
 	AccessToken  string `json:"access_token"`
 	TokenType    string `json:"token_type"`

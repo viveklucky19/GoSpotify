@@ -14,12 +14,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var (
-	State        = "vivek_spotify"
-	ClientId     string
-	ClientSecret string
-)
-
 type ReturnJson struct {
 	Code    string
 	Message string
