@@ -14,11 +14,15 @@ func SpotifyHandler(w http.ResponseWriter, r *http.Request) {
 	switch true {
 	case strings.Contains(r.URL.Path, utility.AUTHORIZE_END_POINT):
 		fmt.Println("AUTHORIZE_END_POINT handler")
-		utility.ReturnResponse(w, controller.SpotifyAuthorizeController())
+		utility.ReturnResponse(w, controller.AuthorizeController())
 	case strings.Contains(r.URL.Path, utility.CALLBACK_END_POINT):
 		fmt.Println("CALLBACK_END_POINT handler")
-		utility.ReturnResponse(w, controller.SpotifyController(r))
-
+		utility.ReturnResponse(w, controller.CallbackController(r))
+	case strings.Contains(r.URL.Path, utility.GET_ACCESS_TOKEN_END_POINT):
+		fmt.Println("GET_ACCESS_TOKEN_END_POINT handler")
+		utility.ReturnResponse(w, controller.GetAccessTokenController())
+	default:
+		fmt.Println("Inavlid URL : ", r.URL)
 	}
 
 }

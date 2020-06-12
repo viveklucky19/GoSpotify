@@ -14,44 +14,17 @@ import (
 	"github.com/spf13/viper"
 )
 
-const (
-	POST_METHOD = "POST"
-)
-
-//end points
-const (
-	AUTHORIZE_END_POINT = "/authorize"
-	CALLBACK_END_POINT  = "/callback"
-)
-const (
-	COLON           = ":"
-	SLASH           = "/"
-	EQUALTO         = "="
-	AMPERSAND       = "&"
-	UrlSlashReplace = "%2F"
-	UrlColonReplace = "%3A"
-)
-const (
-	ConstSpotify       = "spotify"
-	ConstClientId      = "client_id"
-	ConstClientSecret  = "client_secret"
-	ConstCode          = "code"
-	ConstFormEncoded   = "application/x-www-form-urlencoded"
-	ConstAuthorization = "Authorization"
-	BasicAuthType      = "Basic "
-	GRANT_TYPE         = "grant_type"
-	AUTHORIZATION_CODE = "authorization_code"
-	REDIRECT_URI       = "redirect_uri"
-	RedirectURI        = "http://localhost:8080/callback"
-	ConstContentType   = "Content-Type"
-	Token_URL          = "https://accounts.spotify.com/api/token"
-)
-
 var (
 	State        = "vivek_spotify"
 	ClientId     string
 	ClientSecret string
 )
+
+type ReturnJson struct {
+	Code    string
+	Message string
+	Data    interface{}
+}
 
 //SetUpViper... set up viper
 func SetUpViper(configPath, configName string) {
@@ -65,6 +38,7 @@ func SetUpViper(configPath, configName string) {
 
 }
 
+//SetAndGetHeaders... set headers and return it
 func SetAndGetHeaders(contentType, authType, auth string) map[string]string {
 	headers := make(map[string]string)
 	headers[ConstContentType] = contentType
@@ -72,11 +46,12 @@ func SetAndGetHeaders(contentType, authType, auth string) map[string]string {
 	return headers
 }
 
+//GetBase64EncodedValue...get base 64 encoded value
 func GetBase64EncodedValue(input string) string {
 	return base64.StdEncoding.EncodeToString([]byte(input))
 }
 
-//SendRequest.. Common Func to send hhtp request
+//SendRequest.. Common Func to send http request
 func SendRequest(method, url string, reqdata interface{}, headers map[string]string) ([]byte, error) {
 
 	//create payload and client
