@@ -113,7 +113,7 @@ func SpotifySearch(accessToken string, queryData SpotifySearchQuery) (response m
 
 	fmt.Println("URL =", Url)
 
-	resp, err := SendRequest(GET_METHOD, SEARCH_URL, nil, headers)
+	resp, err := SendRequest(GET_METHOD, Url, nil, headers)
 	if err != nil {
 		fmt.Println("Error in SpotifyCallback ", err)
 		return
