@@ -13,6 +13,7 @@ const (
 	AUTHORIZE_END_POINT        = "/authorize"
 	CALLBACK_END_POINT         = "/callback"
 	GET_ACCESS_TOKEN_END_POINT = "/getToken"
+	SPOTIFY_SEARCH             = "/search"
 	TOKEN_URL                  = "https://accounts.spotify.com/api/token"
 	REDIRECT_URL               = "http://localhost:8080/callback"
 )

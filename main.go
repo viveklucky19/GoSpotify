@@ -35,6 +35,7 @@ func main() {
 	http.HandleFunc(utility.AUTHORIZE_END_POINT, handler.SpotifyHandler)
 	http.HandleFunc(utility.CALLBACK_END_POINT, handler.SpotifyHandler)
 	http.HandleFunc(utility.GET_ACCESS_TOKEN_END_POINT, handler.SpotifyHandler)
+	http.HandleFunc(utility.SPOTIFY_SEARCH, handler.SpotifyHandler)
 
 	//server
 	log.Fatal(http.ListenAndServe(Port, nil))
