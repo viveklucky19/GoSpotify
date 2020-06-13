@@ -2,6 +2,7 @@ package utility
 
 const (
 	POST_METHOD = "POST"
+	GET_METHOD  = "GET"
 	CODE_200    = "200"
 	CODE_400    = "400"
 	SUCCESS     = "Success"
@@ -14,13 +15,13 @@ const (
 	CALLBACK_END_POINT         = "/callback"
 	GET_ACCESS_TOKEN_END_POINT = "/getToken"
 	SPOTIFY_SEARCH             = "/search"
-	TOKEN_URL                  = "https://accounts.spotify.com/api/token"
 	REDIRECT_URL               = "http://localhost:8080/callback"
 )
 const (
 	COLON           = ":"
 	SLASH           = "/"
 	EQUALTO         = "="
+	QUESTION_MARK   = "?"
 	AMPERSAND       = "&"
 	UrlSlashReplace = "%2F"
 	UrlColonReplace = "%3A"
@@ -33,6 +34,7 @@ const (
 	ConstFormEncoded       = "application/x-www-form-urlencoded"
 	ConstAuthorization     = "Authorization"
 	BasicAuthType          = "Basic "
+	BearerAuthType         = "Bearer "
 	ConstGrantType         = "grant_type"
 	ConstAuthorizationCode = "authorization_code"
 	ConstRedirectUri       = "redirect_uri"

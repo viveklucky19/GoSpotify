@@ -21,6 +21,10 @@ func SpotifyHandler(w http.ResponseWriter, r *http.Request) {
 	case strings.Contains(r.URL.Path, utility.GET_ACCESS_TOKEN_END_POINT):
 		fmt.Println("GET_ACCESS_TOKEN_END_POINT handler")
 		utility.ReturnResponse(w, controller.GetAccessTokenController())
+	case strings.Contains(r.URL.Path, utility.SPOTIFY_SEARCH):
+		fmt.Println("SPOTIFY_SEARCH handler")
+		utility.ReturnResponse(w, controller.SpotifySearchController(r))
+
 	default:
 		fmt.Println("Inavlid URL : ", r.URL)
 	}

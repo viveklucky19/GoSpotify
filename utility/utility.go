@@ -2,6 +2,7 @@ package utility
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -35,7 +36,9 @@ func SetUpViper(configPath, configName string) {
 //SetAndGetHeaders... set headers and return it
 func SetAndGetHeaders(contentType, authType, auth string) map[string]string {
 	headers := make(map[string]string)
-	headers[ConstContentType] = contentType
+	if contentType != "" {
+		headers[ConstContentType] = contentType
+	}
 	headers[ConstAuthorization] = authType + auth
 	return headers
 }
@@ -48,9 +51,15 @@ func GetBase64EncodedValue(input string) string {
 //SendRequest.. Common Func to send http request
 func SendRequest(method, url string, reqdata interface{}, headers map[string]string) ([]byte, error) {
 
+	var payload io.Reader
+	payload = nil
 	//create payload and client
-	payload := strings.NewReader(reqdata.(string))
-	fmt.Println("Request Body :   ", reqdata.(string))
+
+	if reqdata != nil {
+		payload = strings.NewReader(reqdata.(string))
+		fmt.Println("Request Body :   ", reqdata.(string))
+	}
+
 	client := &http.Client{}
 
 	//create request

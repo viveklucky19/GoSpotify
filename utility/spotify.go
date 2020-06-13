@@ -16,6 +16,11 @@ var (
 	ClientSecret string
 )
 
+const (
+	TOKEN_URL  = "https://accounts.spotify.com/api/token"
+	SEARCH_URL = "https://api.spotify.com/v1/search"
+)
+
 type SpotifyToken struct {
 	AccessToken  string `json:"access_token"`
 	TokenType    string `json:"token_type"`
@@ -24,7 +29,7 @@ type SpotifyToken struct {
 	Scope        string `json:"scope"`
 }
 
-type SpotifySearch struct {
+type SpotifySearchQuery struct {
 	Query           string `json:"query"`
 	Type            string `json:"type"`
 	Market          string `json:"market"`
@@ -63,7 +68,7 @@ func SpotifyCallback(code string) (SpotifyTokenDetails models.Spotify, err error
 
 	resMap := cast.ToStringMap(string(resp))
 	if _, ok := resMap["error"]; !ok {
-		//unmarshall it to Spotify model and save it to db
+		//unmarshall it to Spotify struct
 		var SpotifyData SpotifyToken
 		err = json.Unmarshal(resp, &SpotifyData)
 		if err != nil {
@@ -81,4 +86,41 @@ func SpotifyCallback(code string) (SpotifyTokenDetails models.Spotify, err error
 
 	}
 	return
+}
+
+//https://api.spotify.com/v1/search
+func SpotifySearch(accessToken string, queryData SpotifySearchQuery) (response map[string]interface{}, err error) {
+
+	headers := SetAndGetHeaders("", BearerAuthType, accessToken)
+
+	mapValues := map[string]string{}
+	mapValues["q"] = queryData.Query
+	mapValues["type"] = queryData.Type
+	mapValues["limit"] = queryData.Limit
+	mapValues["offset"] = queryData.Offset
+	mapValues["market"] = queryData.Market
+	mapValues["include_external"] = queryData.IncludeExternal
+
+	Url := SEARCH_URL + QUESTION_MARK
+
+	for k, v := range mapValues {
+
+		if v != "" {
+			Url = Url + k + EQUALTO + v + AMPERSAND
+
+		}
+	}
+
+	fmt.Println("URL =", Url)
+
+	resp, err := SendRequest(GET_METHOD, SEARCH_URL, nil, headers)
+	if err != nil {
+		fmt.Println("Error in SpotifyCallback ", err)
+		return
+	}
+
+	response = cast.ToStringMap(string(resp))
+
+	return response, nil
+
 }
